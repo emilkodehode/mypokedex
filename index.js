@@ -32,8 +32,7 @@ on hover symbols expand into base stat information
 hover has container with list of info inside.
 
 i fear my pokemon card assembler function thing is gonna be a mess and very heavy
-
-
+OH WELL time to learn
 
 */
 
@@ -49,28 +48,56 @@ async function apiGet(url){
 }
 
 async function pokemonTest(){
-    pokemonData = await apiGet("https://pokeapi.co/api/v2/pokemon?offset=0&limit=20")
+    pokemonData = await apiGet("https://pokeapi.co/api/v2/pokemon?offset=0&limit=9")
     const pageMeat = pokemonData.results
     let arrayOfPokemon = []
     for (const meat of pageMeat) {
-        arrayOfPokemon.push(await pokemonCardMaker(meat))
+        arrayOfPokemon.push(await pokemonCard(meat))
     }
     pokeContainerEL.append(...arrayOfPokemon)
 }
 
 pokemonTest()
 
-async function pokemonCardMaker(obj){
+function hoverClassToggle(e){
+    e.target.classList.toggle("hover");
+    e.target.querySelector(".details-simple").classList.toggle("hidden")
+}
+
+//i get all the info i need to make what i want here but i probably should split it into on maker for each state of a card
+//one pokemoncardmaker one pokemoncardhover and one pokemoncardclicked i think that is a good way to go
+async function pokemonCard(obj){
     const {name, url} = obj
+
+    const card = document.createElement("div")
+    card.className = "card"
+    card.addEventListener("mouseenter", (e)=>{hoverClassToggle(e)})
+    card.addEventListener("mouseleave", (e)=>{hoverClassToggle(e)})
+
     const title = document.createElement("p")
     title.textContent = name
+
     const picture = document.createElement("img")
     const singlePokeData = await apiGet(url)
     picture.src = singlePokeData.sprites.other["official-artwork"].front_default
     picture.alt = name
-    const card = document.createElement("div")
-    card.className = "card"
 
-    card.append(title,picture)
+    const info = pokemonCardHover(singlePokeData)
+    card.append(title,picture,info)
     return card
+}
+
+function pokemonCardHover(obj){
+    const {stats} = obj
+    const detailsContainer = document.createElement("div")
+    detailsContainer.className = "details-simple hidden"
+    
+    const listEl = document.createElement("ul")
+    for (const stat of stats) {
+        let listItem = document.createElement("li")
+        listItem.innerText = `${stat.stat.name} / ${stat.base_stat}`
+        listEl.append(listItem)
+    }
+    detailsContainer.append(listEl)
+    return detailsContainer
 }
