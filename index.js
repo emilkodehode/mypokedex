@@ -61,7 +61,7 @@ pokemonTest()
 
 function hoverClassToggle(e){
     e.target.classList.toggle("hover");
-    e.target.querySelector(".details-simple").classList.toggle("hidden")
+    e.target.querySelector(".hover-info").classList.toggle("hidden")
 }
 
 //i get all the info i need to make what i want here but i probably should split it into on maker for each state of a card
@@ -76,21 +76,23 @@ async function pokemonCard(obj){
 
     const title = document.createElement("p")
     title.textContent = name
-
     const picture = document.createElement("img")
     const singlePokeData = await apiGet(url)
     picture.src = singlePokeData.sprites.other["official-artwork"].front_default
     picture.alt = name
-
+    
+    const pokemonContainer = document.createElement("div")
+    pokemonContainer.className = "containerpokemon"
     const info = pokemonCardHover(singlePokeData)
-    card.append(title,picture,info)
+    pokemonContainer.append(info, picture)
+    card.append(title,pokemonContainer)
     return card
 }
 
 function pokemonCardHover(obj){
     const {stats} = obj
     const detailsContainer = document.createElement("div")
-    detailsContainer.className = "details-simple hidden"
+    detailsContainer.className = "hover-info hidden"
     
     const listEl = document.createElement("ul")
     for (const stat of stats) {
