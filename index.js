@@ -47,6 +47,15 @@ async function apiGet(url){
     return data
 }
 
+async function consolelog(){
+    let mordata = await apiGet("https://pokeapi.co/api/v2/pokemon?offset=0&limit=3")
+    for (const iterator of mordata) {
+        console.log(iterator.name)
+    }
+}
+
+//consolelog()
+
 async function pokemonTest(){
     pokemonData = await apiGet("https://pokeapi.co/api/v2/pokemon?offset=0&limit=9")
     const pageMeat = pokemonData.results
@@ -85,7 +94,9 @@ async function pokemonCard(obj){
     pokemonContainer.className = "containerpokemon"
     const info = pokemonCardHover(singlePokeData)
     pokemonContainer.append(info, picture)
-    card.append(title,pokemonContainer)
+    const sampletext = document.createElement("p")
+    sampletext.textContent = `i am a little ${name}`
+    card.append(title,pokemonContainer, sampletext)
     return card
 }
 
