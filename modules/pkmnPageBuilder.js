@@ -1,8 +1,15 @@
 import createPageElement from "./createPageElement.js"
+import apiGet from "./apiGet.js"
+import navigationUrls from "../data/pkmUrls.js"
+import typeIcons from "../data/pkmTypeIcons.js"
 
 async function pkmnPageBuilder(url, target){
     const pokemonData = await apiGet(url)
     const pageMeat = pokemonData.results
+    navigationUrls.setUrls(pokemonData)
+    while(target.childElementCount > 0){
+        target.removeChild(target.lastChild)
+    }
     let arrayOfPokemon = []
     for (const meat of pageMeat) {
         arrayOfPokemon.push(await pokemonCard(meat))
@@ -16,7 +23,7 @@ function hoverClassToggle(e){
 }
 
 //i get all the info i need to make what i want here but i probably should split it into on maker for each state of a card
-//one pokemoncardmaker one pokemoncardhover and one pokemoncardclicked i think that is a good way to go
+//one pokemoncardmaker one pokemoncardhover and one pokemoncardclicked
 async function pokemonCard(obj){
     const {name, url} = obj
 
@@ -30,16 +37,26 @@ async function pokemonCard(obj){
     const singlePokeData = await apiGet(url)
     const picture = createPageElement("img", {src: singlePokeData.sprites.other["official-artwork"].front_default,alt: name})
     
+    const typesContainer = createPageElement("div", {className: "typescontainer"})
+    let types = []
+    for (let i = 0; i < singlePokeData.types.length; i++) {
+        const typeName = singlePokeData.types[i].type.name
+        const typeEl = createPageElement("div", {className:"typeicon"})
+        const typePic = createPageElement("img", {src: typeIcons.src[typeName]})
+        typeEl.style.backgroundColor = typeIcons.color[typeName]
+        const typeText = createPageElement("p", {textContent: typeName})
+        typeEl.append(typeText,typePic)
+        types.push(typeEl)
+    }
+    typesContainer.append(...types)
     const pokemonContainer = document.createElement("div")
     pokemonContainer.className = "containerpokemon"
 
     const info = pokemonCardHover(singlePokeData)
     pokemonContainer.append(info, picture)
 
-    const sampletext = document.createElement("p")
-    sampletext.textContent = `i am a little ${name}`
 
-    card.append(title,pokemonContainer, sampletext)
+    card.append(title,pokemonContainer, typesContainer)
     return card
 }
 
