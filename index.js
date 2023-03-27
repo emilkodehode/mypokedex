@@ -43,7 +43,7 @@ i get nature
 i need to find some pokemon nature/type symbols link em fetch or something and make some array correspodning to that so i can change the background color of the cards
 */
 
-const pokeContainerEL = document.getElementById("pokemaincontainer")
+const pokeContainerEL = document.getElementById("pokemain-container")
 const navEl = document.getElementById("nav-bar")
 
 function navBar(targetEL){

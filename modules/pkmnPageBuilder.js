@@ -19,7 +19,7 @@ async function pkmnPageBuilder(url, target){
 
 function hoverClassToggle(e){
     e.target.classList.toggle("hover");
-    e.target.querySelector(".hover-info").classList.toggle("hidden")
+    e.target.querySelector(".details-text").classList.toggle("hidden")
 }
 
 //i get all the info i need to make what i want here but i probably should split it into on maker for each state of a card
@@ -37,11 +37,11 @@ async function pokemonCard(obj){
     const singlePokeData = await apiGet(url)
     const picture = createPageElement("img", {src: singlePokeData.sprites.other["official-artwork"].front_default,alt: name})
     
-    const typesContainer = createPageElement("div", {className: "typescontainer"})
+    const typesContainer = createPageElement("div", {className: "types-container"})
     let types = []
     for (let i = 0; i < singlePokeData.types.length; i++) {
         const typeName = singlePokeData.types[i].type.name
-        const typeEl = createPageElement("div", {className:"typeicon"})
+        const typeEl = createPageElement("div", {className:"type-icon"})
         const typePic = createPageElement("img", {src: typeIcons.src[typeName]})
         typeEl.style.backgroundColor = typeIcons.color[typeName]
         const typeText = createPageElement("p", {textContent: typeName})
@@ -50,11 +50,10 @@ async function pokemonCard(obj){
     }
     typesContainer.append(...types)
     const pokemonContainer = document.createElement("div")
-    pokemonContainer.className = "containerpokemon"
+    pokemonContainer.className = "pkmn-details"
 
     const info = pokemonCardHover(singlePokeData)
     pokemonContainer.append(info, picture)
-
 
     card.append(title,pokemonContainer, typesContainer)
     return card
@@ -63,7 +62,7 @@ async function pokemonCard(obj){
 function pokemonCardHover(obj){
     const {stats} = obj
     const detailsContainer = document.createElement("div")
-    detailsContainer.className = "hover-info hidden"
+    detailsContainer.className = "details-text hidden"
     
     const listEl = document.createElement("ul")
     for (const stat of stats) {
@@ -76,3 +75,14 @@ function pokemonCardHover(obj){
 }
 
 export default pkmnPageBuilder
+
+/*
+click and this div is shown styling dictates changes. so a transition to fill the screen on card clicked
+flavor text are shown the card goes to the left and more info appear right side for now lets worry about just getting more info to show up
+class additionaldetails
+*/
+function pokemonCardClick(obj){
+    //get some flavor text and items and stuff
+    const additionalDetailsContainer = createPageElement("div", {className: "additional-details"})
+
+}

@@ -7,7 +7,7 @@
     height: fit-content;
     z-index: 0;
 }
-#pokemaincontainer{
+#pokemain-container{
     display: grid;
     grid-template-columns: auto auto auto;
     gap: 25px 25px;
@@ -16,37 +16,19 @@
     border: gold 10px solid;
     border-radius: 10%;
 }
-.details-simple{
-    position: absolute;
-    align-self: center;
-    justify-self: center;
-    border: blue 5px solid;
-    z-index: 1;
-}
-.containerpokemon{
+.pkmn-details{
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 5%;
 }
-.containerpokemon img{
+.container-pokemon img{
     background-color: black;
     border-radius: inherit;
 
 }
-/* here the bottom card info styling */
-.typescontainer, .typeicon{
-    display: flex;
-}
-.typeicon{
-    height: 32px;
-}
-.typeicon img{
-    max-width: 100%;
-    height: auto;
-}
-.hover-info{
+.details-text{
     border-radius: inherit;
     position: absolute;
     z-index: 10;
@@ -59,3 +41,27 @@
 .hidden{
     display: none;
 }
+/*- -   -   -   -   -   -   -   -   -   -
+ styling for type symbols
+ -  -   -   -   -   -   -   -   -   -   -*/
+.types-container, .type-icon{
+    justify-content: center;
+    display: flex;
+}
+.type-icon{
+    height: 64px;
+    border-radius: 50%;
+    padding: 10px;
+    width: fit-content;
+}
+.type-icon img{
+    max-width: 100%;
+    height: auto;
+}
+.type-icon p{
+    align-self: center;
+    font-size: 32px;
+}
+/* -    -   -   -   -   -   -   -   -   -   -
+styling for clicked card event
+-   -   -   -   -   -   -   -   -   -   -   -*/
