@@ -1,11 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Delicious+Handrawn&family=Nothing+You+Could+Do&family=Play&display=swap');
+/* 
+Allerta Stencil
+Delicious Handrawn
+Nothing You Could Do
+Play
+*/
 *{
     margin: 0;
-}
-.card{
-    border: red 5px solid;
-    width: fit-content;
-    height: fit-content;
-    z-index: 0;
 }
 #pokemain-container{
     display: grid;
@@ -13,8 +14,18 @@
     gap: 25px 25px;
 }
 .card{
+    max-width: 600px;
+    z-index: 0;
+    padding: 2rem;
     border: gold 10px solid;
     border-radius: 10%;
+}
+.card-header{
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    font-family: "Delicious Handrawn";
+    font-size: 2.5rem;
 }
 .pkmn-details{
     position: relative;
@@ -33,10 +44,15 @@
     position: absolute;
     z-index: 10;
     display: block;
-    display: inline-flex;
     width: 100%;
     height: 100%;
     background-color: aquamarine;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.base-stat{
+    justify-self: center;
+    align-self: center;
 }
 .hidden{
     display: none;
@@ -49,9 +65,9 @@
     display: flex;
 }
 .type-icon{
-    height: 64px;
+    height: 4rem;
     border-radius: 50%;
-    padding: 10px;
+    padding: 0.75rem;
     width: fit-content;
 }
 .type-icon img{
@@ -59,8 +75,9 @@
     height: auto;
 }
 .type-icon p{
+    font-family: "Play";
     align-self: center;
-    font-size: 32px;
+    font-size: 2rem;
 }
 /* -    -   -   -   -   -   -   -   -   -   -
 styling for clicked card event

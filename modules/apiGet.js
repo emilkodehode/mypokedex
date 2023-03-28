@@ -1,3 +1,4 @@
+'use strict'
 async function apiGet(url){
     const request = await fetch(url)
     if(!request.ok){

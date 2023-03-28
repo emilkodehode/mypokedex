@@ -1,41 +1,44 @@
+'use strict'
 import createPageElement from "./createPageElement.js"
 import apiGet from "./apiGet.js"
 import navigationUrls from "../data/pkmUrls.js"
 import typeIcons from "../data/pkmTypeIcons.js"
 
-async function pkmnPageBuilder(url, target){
-    const pokemonData = await apiGet(url)
-    const pageMeat = pokemonData.results
+async function pkmnPageBuilder(arrayData, target){
+    const pokemonData = await arrayData
     navigationUrls.setUrls(pokemonData)
     while(target.childElementCount > 0){
         target.removeChild(target.lastChild)
     }
     let arrayOfPokemon = []
-    for (const meat of pageMeat) {
-        arrayOfPokemon.push(await pokemonCard(meat))
+    for (const pkmn of pokemonData.results) {
+        arrayOfPokemon.push(await pokemonCard(pkmn))
     }
     target.append(...arrayOfPokemon)
 }
 
 function hoverClassToggle(e){
-    e.target.classList.toggle("hover");
     e.target.querySelector(".details-text").classList.toggle("hidden")
 }
 
 //i get all the info i need to make what i want here but i probably should split it into on maker for each state of a card
 //one pokemoncardmaker one pokemoncardhover and one pokemoncardclicked
-async function pokemonCard(obj){
-    const {name, url} = obj
+async function pokemonCard(objWithPkmnUrl){
+    const {url} = objWithPkmnUrl
+    const singlePokeData = await apiGet(url)
 
     const card = document.createElement("div")
     card.className = "card"
     card.addEventListener("mouseenter", (e)=>{hoverClassToggle(e)})
     card.addEventListener("mouseleave", (e)=>{hoverClassToggle(e)})
 
-
-    const title = createPageElement("p", {"textContent": name})
-    const singlePokeData = await apiGet(url)
-    const picture = createPageElement("img", {src: singlePokeData.sprites.other["official-artwork"].front_default,alt: name})
+    const cardHeader = createPageElement("div", {className: "card-header"})
+    const headerId = createPageElement("p", {textContent: singlePokeData.id})
+    const headerName = createPageElement("p", {textContent: singlePokeData.name})
+    cardHeader.append(headerId, headerName)
+    
+    const picture = createPageElement("img", {src: singlePokeData.sprites.other["official-artwork"].front_default,
+    alt: `Image depicting the Pokèmon ${singlePokeData.name} with number ID ${singlePokeData.id}`})
     
     const typesContainer = createPageElement("div", {className: "types-container"})
     let types = []
@@ -55,7 +58,7 @@ async function pokemonCard(obj){
     const info = pokemonCardHover(singlePokeData)
     pokemonContainer.append(info, picture)
 
-    card.append(title,pokemonContainer, typesContainer)
+    card.append(cardHeader,pokemonContainer, typesContainer)
     return card
 }
 
@@ -64,13 +67,13 @@ function pokemonCardHover(obj){
     const detailsContainer = document.createElement("div")
     detailsContainer.className = "details-text hidden"
     
-    const listEl = document.createElement("ul")
+    let statArray = []
     for (const stat of stats) {
-        let listItem = document.createElement("li")
-        listItem.innerText = `${stat.stat.name} / ${stat.base_stat}`
-        listEl.append(listItem)
+        const statInfoText = createPageElement("p", {textContent: stat.stat.name, className: "base-stat"})
+        const statInfoNum = createPageElement("p", {textContent: stat.base_stat, className: "base-stat"})
+        statArray.push(statInfoText,statInfoNum)
     }
-    detailsContainer.append(listEl)
+    detailsContainer.append(...statArray)
     return detailsContainer
 }
 
