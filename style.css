@@ -57,6 +57,9 @@ Play
 .hidden{
     display: none;
 }
+.additional-hidden{
+    display: none;
+}
 /*- -   -   -   -   -   -   -   -   -   -
  styling for type symbols
  -  -   -   -   -   -   -   -   -   -   -*/

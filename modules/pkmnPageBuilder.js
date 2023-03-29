@@ -17,9 +17,8 @@ async function pkmnPageBuilder(arrayData, target){
     target.append(...arrayOfPokemon)
 }
 
-function hoverClassToggle(e){
-    e.target.querySelector(".details-text").classList.toggle("hidden")
-}
+function hoverClassToggle(e){e.target.querySelector(".details-text").classList.toggle("hidden")}
+
 
 //i get all the info i need to make what i want here but i probably should split it into on maker for each state of a card
 //one pokemoncardmaker one pokemoncardhover and one pokemoncardclicked
@@ -31,6 +30,10 @@ async function pokemonCard(objWithPkmnUrl){
     card.className = "card"
     card.addEventListener("mouseenter", (e)=>{hoverClassToggle(e)})
     card.addEventListener("mouseleave", (e)=>{hoverClassToggle(e)})
+    card.addEventListener("click", function(){
+        this.querySelector(".additional-details-text").classList.toggle("additional-hidden")
+    })
+
 
     const cardHeader = createPageElement("div", {className: "card-header"})
     const headerId = createPageElement("p", {textContent: singlePokeData.id})
@@ -58,7 +61,9 @@ async function pokemonCard(objWithPkmnUrl){
     const info = pokemonCardHover(singlePokeData)
     pokemonContainer.append(info, picture)
 
-    card.append(cardHeader,pokemonContainer, typesContainer)
+    const moreInfo = pokemonCardClick()
+
+    card.append(cardHeader,pokemonContainer, typesContainer, moreInfo)
     return card
 }
 
@@ -66,7 +71,7 @@ function pokemonCardHover(obj){
     const {stats} = obj
     const detailsContainer = document.createElement("div")
     detailsContainer.className = "details-text hidden"
-    
+
     let statArray = []
     for (const stat of stats) {
         const statInfoText = createPageElement("p", {textContent: stat.stat.name, className: "base-stat"})
@@ -86,6 +91,7 @@ class additionaldetails
 */
 function pokemonCardClick(obj){
     //get some flavor text and items and stuff
-    const additionalDetailsContainer = createPageElement("div", {className: "additional-details"})
-
+    const additionalDetailsContainer = createPageElement("div", {className: "additional-details-text additional-hidden"})
+    additionalDetailsContainer.textContent = "woooooowie i am here"
+    return additionalDetailsContainer
 }
