@@ -57,6 +57,14 @@ Play
 .hidden{
     display: none;
 }
+.additional-details-text{
+    visibility: visible;
+    position: fixed;
+    z-index: 6;
+    top: 10%;
+    left: 10%;
+    background-color: red;
+}
 .additional-hidden{
     display: none;
 }

@@ -61,7 +61,7 @@ async function pokemonCard(objWithPkmnUrl){
     const info = pokemonCardHover(singlePokeData)
     pokemonContainer.append(info, picture)
 
-    const moreInfo = pokemonCardClick()
+    const moreInfo = pokemonCardClick(singlePokeData)
 
     card.append(cardHeader,pokemonContainer, typesContainer, moreInfo)
     return card
@@ -90,6 +90,7 @@ flavor text are shown the card goes to the left and more info appear right side 
 class additionaldetails
 */
 function pokemonCardClick(obj){
+    //flavor text egg group weight height 
     //get some flavor text and items and stuff
     const additionalDetailsContainer = createPageElement("div", {className: "additional-details-text additional-hidden"})
     additionalDetailsContainer.textContent = "woooooowie i am here"
