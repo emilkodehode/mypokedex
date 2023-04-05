@@ -15,6 +15,13 @@ done: get some poke info
 done: display some pokeinfo on hover
 done: get pokemonsymbol correspodning to type
 
+issue:
+//some flavor text need to be found by correct language key:value this needs to be fixed
+//i need to make it so cards ar loaded faster right now they all wait for everything to finish i need to reorder and restructure the way i fetch and make cards
+
+i fetch once to gather info on what pokemons to fetch information on 9 each of these uses the pokemon fetch itself to get
+
+
 search funtionality
 more transitions
 better styling
@@ -63,7 +70,8 @@ navBar(navEl)
 pkmnPageBuilder(apiGet(navigationUrls.default), pokeContainerEL)
 
 async function searchPokemon(input){
-    if(input.length <= 2)return
+    // console.log(input + " " + input.length)
+    if(input.length < 3)return
     //get pokemon list of all names if search typed character is included in pokemon list of names return all of those
     //this should be a varibale to includes growth in list of available pokemons
     const everyPokemon = await apiGet(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=1281`)

@@ -15,6 +15,7 @@ Play
 }
 .card{
     max-width: 600px;
+    position: relative;
     z-index: 0;
     padding: 2rem;
     border: gold 10px solid;
@@ -26,6 +27,9 @@ Play
     justify-content: space-between;
     font-family: "Delicious Handrawn";
     font-size: 2.5rem;
+}
+.card-header p{
+    text-transform: capitalize;
 }
 .pkmn-details{
     position: relative;
@@ -42,7 +46,7 @@ Play
 .details-text{
     border-radius: inherit;
     position: absolute;
-    z-index: 10;
+    z-index: 3;
     display: block;
     width: 100%;
     height: 100%;
@@ -89,6 +93,7 @@ Play
     font-family: "Play";
     align-self: center;
     font-size: 2rem;
+    text-transform: capitalize;
 }
 /* -    -   -   -   -   -   -   -   -   -   -
 styling for clicked card event
